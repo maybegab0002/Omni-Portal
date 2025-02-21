@@ -6,20 +6,25 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   base: '/Omni-Portal/',
+  resolve: {
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, 'src') },
+    ],
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    sourcemap: true,
     rollupOptions: {
       output: {
-        assetFileNames: 'assets/[name].[ext]',
-        chunkFileNames: 'assets/[name].js',
-        entryFileNames: 'assets/[name].js',
+        manualChunks: {
+          'vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui': ['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge'],
+        },
       },
     },
   },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@radix-ui/react-slot'],
   },
 })
