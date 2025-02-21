@@ -21,22 +21,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm install
-          npm ci
+        run: npm ci
 
       - name: Build project
-        env:
-          VITE_BASE_URL: /Omni-Portal/
-        run: |
-          npm run build
-          cp dist/index.html dist/404.html
-
-      - name: Fix permissions
-        run: |
-          chmod -R 755 dist
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
