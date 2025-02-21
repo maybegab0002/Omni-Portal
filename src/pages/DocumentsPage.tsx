@@ -362,7 +362,7 @@ export default function DocumentsPage() {
       setUploadProgress('Starting upload...');
 
       // First, save the document details to the Documents table
-      const { data: documentRecord, error: documentError } = await supabase
+      const { error: documentError } = await supabase
         .from('Documents')
         .insert([
           {
